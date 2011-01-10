@@ -1,0 +1,4 @@
+content webstartup jar:chrome/webstartup.jar!/content/
+overlay chrome://browser/content/browser.xul chrome://webstartup/content/webstartup.xul
+
+skin webstartup classic/1.0 jar:chrome/webstartup.jar!/skin/

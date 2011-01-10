@@ -1,0 +1,12 @@
+pref("extensions.webstartup.pagerank", true);
+pref("extensions.webstartup.alexa", true);
+pref("extensions.webstartup.compete", true);
+pref("extensions.webstartup.quantcast", true);
+pref("extensions.webstartup.googlebl", true);
+pref("extensions.webstartup.bingbl", true);
+pref("extensions.webstartup.yahoobl", true);
+pref("extensions.webstartup.crunchbase", true);
+pref("extensions.webstartup.linkedin", true);
+pref("extensions.webstartup.showsettings", true);
+pref("extensions.webstartup.reload", true);
+pref("extensions.webstartup.updatetime", 1);
