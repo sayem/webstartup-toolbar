@@ -4,13 +4,13 @@
         <!-- Required Items -->
         <em:id>firefox@sayemislam.com</em:id>
         <em:name>Web Startup Toolbar</em:name>
-        <em:version>1.3</em:version>
+        <em:version>1.4</em:version>
 		<em:optionsURL>chrome://webstartup/content/options.xul</em:optionsURL>
         <em:targetApplication>
             <Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
-                <em:minVersion>0.3</em:minVersion>
-                <em:maxVersion>4.0b5pre</em:maxVersion>
+                <em:minVersion>1.5</em:minVersion>
+                <em:maxVersion>4.0b9pre</em:maxVersion>
             </Description>
         </em:targetApplication>
 
