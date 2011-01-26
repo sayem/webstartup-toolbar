@@ -4,7 +4,7 @@
         <!-- Required Items -->
         <em:id>firefox@sayemislam.com</em:id>
         <em:name>Web Startup Toolbar</em:name>
-        <em:version>1.4</em:version>
+        <em:version>1.5</em:version>
 		<em:optionsURL>chrome://webstartup/content/options.xul</em:optionsURL>
         <em:targetApplication>
             <Description>
