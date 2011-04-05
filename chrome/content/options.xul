@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<prefwindow id="webstartup-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" orient="vertical" autostretch="always" title="Toolbar Settings and Options" ondialogaccept="return customizeWebStartup();" ondialogcancel="return customizeWebStartup();">
+<script type="application/x-javascript" src="chrome://webstartup/content/options.js" />
+  <prefpane id="pane1" label="Options">
+    <preferences>
+      <preference id="ws_rank_pr" name="extensions.webstartup.pagerank" type="bool"/>	  
+	  <preference id="ws_rank_alexa" name="extensions.webstartup.alexa" type="bool"/>
+	  <preference id="ws_rank_compete" name="extensions.webstartup.compete" type="bool"/>
+	  <preference id="ws_rank_quantcast" name="extensions.webstartup.quantcast" type="bool"/>
+	  
+	  <preference id="ws_backlink_google" name="extensions.webstartup.googlebl" type="bool"/>
+	  <preference id="ws_backlink_bing" name="extensions.webstartup.bingbl" type="bool"/>
+	  <preference id="ws_backlink_yahoo" name="extensions.webstartup.yahoobl" type="bool"/>
+	  
+	  <preference id="ws_crunchbase" name="extensions.webstartup.crunchbase" type="bool"/>
+	  <preference id="ws_linkedin" name="extensions.webstartup.linkedin" type="bool"/>
+	  <preference id="ws_settings" name="extensions.webstartup.showsettings" type="bool"/>
+	  <preference id="ws_reload" name="extensions.webstartup.reload" type="bool"/>
+	  <preference id="ws_updatetime" name="extensions.webstartup.updatetime" type="int"/>	  
+    </preferences>
+    <tabbox id="prefs_tabbox">
+		<tabs>
+			<tab id="basic_tab" label="Basic"/>
+			<tab id="ranks_tab" label="Website Ranks"/>
+			<tab id="backlinks_tab" label="Backlinks"/>
+			<tab id="tools_tab" label="Tools"/>
+		</tabs>
+		<tabpanels>
+			<tabpanel id="basic_panel" orient="vertical">
+				<hbox>
+					<vbox>
+						<hbox align="start">
+							<checkbox label="LinkedIn" preference="ws_linkedin" src="chrome://webstartup/skin/linkedin.png"/>
+						</hbox>						
+						<hbox align="start">
+							<checkbox label="CrunchBase" preference="ws_crunchbase" src="chrome://webstartup/skin/crunchbase.png"/>
+						</hbox>						
+						<hbox align="start">
+							Update the data every <textbox width="30" preference="ws_updatetime" style="vertical-align:middle" type="number" min="1" value="24" max="24"/> hours.
+						</hbox>
+					</vbox>
+				</hbox>
+			</tabpanel>
+
+			<tabpanel id="ranks_panel" orient="vertical">
+				<hbox>
+					<vbox>
+						<hbox align="start">
+							<checkbox label="Google Pagerank" preference="ws_rank_pr" src="chrome://webstartup/skin/google.png"/>
+						</hbox>
+						<hbox align="start">
+							<checkbox label="Alexa Rank" preference="ws_rank_alexa" src="chrome://webstartup/skin/alexa.ico"/>
+						</hbox>
+						<hbox align="start">
+							<checkbox label="Compete Uniques" preference="ws_rank_compete" src="chrome://webstartup/skin/compete.png"/>
+						</hbox>
+						<hbox align="start">
+							<checkbox label="Quantcast Uniques" preference="ws_rank_quantcast" src="chrome://webstartup/skin/quantcast.png"/>
+						</hbox>
+					</vbox>
+				</hbox>
+			</tabpanel>
+			<tabpanel id="backlinks_panel" orient="vertical">
+				<hbox>
+					<vbox>
+						<hbox align="start">
+							<checkbox label="Google" preference="ws_backlink_google" src="chrome://webstartup/skin/google.png"/>
+						</hbox>
+						<hbox align="start">
+							<checkbox label="Bing" preference="ws_backlink_bing" src="chrome://webstartup/skin/bing.png"/>
+						</hbox>
+						<hbox align="start">
+							<checkbox label="Yahoo" preference="ws_backlink_yahoo" src="chrome://webstartup/skin/yahoo.png"/>
+						</hbox>
+					</vbox>
+				</hbox>
+			</tabpanel>
+			
+			<tabpanel id="tools_panel" orient="vertical">
+				<hbox>
+					<vbox>
+						<hbox align="start">
+							<checkbox label="Reload" preference="ws_reload" src="chrome://webstartup/skin/reload.png"/>
+						</hbox>
+						<hbox align="start">
+							<checkbox label="Settings" preference="ws_settings" src="chrome://webstartup/skin/settings.png"/>
+						</hbox>
+					</vbox>
+				</hbox>
+			</tabpanel>
+			
+		</tabpanels>
+	</tabbox>
+  </prefpane>
+</prefwindow>
