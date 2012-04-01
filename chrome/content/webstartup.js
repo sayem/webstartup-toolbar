@@ -61,7 +61,8 @@ window.WebStartup = {
         var Flag = 0;
         var HashStr;
         if (Hashnum < 0) HashStr = 4294967296 + Hashnum;
-        else HashStr = Hashnum;
+        else
+        HashStr = Hashnum;
         HashStr = HashStr + '';
         var length = HashStr.length;
         for (var i = length - 1; i >= 0; i--) {
@@ -282,7 +283,7 @@ window.WebStartup = {
         WebStartup.$("ws_crunchbase").tooltipText = 'CrunchBase: ' + WebStartup.wsdata[WebStartup.currUrl]["crunchbase"];
     },
     googleRank: function () {
-        WebStartup.workingURL = 'http://toolbarqueries.google.com/search?client=navclient-auto&ch=' + WebStartup.CheckHash(WebStartup.HashURL(WebStartup.currUrl)) + '&features=Rank&q=info:' + encodeURIComponent(WebStartup.currUrl) + '&num=100&filter=0';
+        WebStartup.workingURL = 'http://toolbarqueries.google.com/tbr?client=navclient-auto&ch=' + WebStartup.CheckHash(WebStartup.HashURL(WebStartup.currUrl)) + '&features=Rank&q=info:' + encodeURIComponent(WebStartup.currUrl) + '&num=100&filter=0';
         WebStartup.prxmlhttp = WebStartup.getXmlHttpObject();
         WebStartup.prxmlhttp.onreadystatechange = function () {
             if (WebStartup.prxmlhttp.readyState == 4 && WebStartup.prxmlhttp.status == 200) {
@@ -585,7 +586,7 @@ window.WebStartup = {
 			var start = rt.lastIndexOf('<td class="td_left2">');
 			var end = rt.indexOf(' <sup', start);
 			round = rt.substr(start + 21, end - start - 21);
-			if (round.match(/(^(Seed|Angel|Series|Grant|Debt|Unattributed))\s?[A-Z]?,\s((1[0-2]|0?[1-9])\/[0-9][0-9])$/)[0]) round = round.match(/(^(Seed|Angel|Series|Grant|Debt|Unattributed))\s?[A-Z]?,\s((1[0-2]|0?[1-9])\/[0-9][0-9])$/)[0];
+			if (round.match(/(^(Seed|Angel|Series|Grant|Debt|Unattributed|Venture Round))\s?[A-Z]?,\s((1[0-2]|0?[1-9])\/[0-9][0-9])$/)[0]) round = round.match(/(^(Seed|Angel|Series|Grant|Debt|Unattributed|Venture Round))\s?[A-Z]?,\s((1[0-2]|0?[1-9])\/[0-9][0-9])$/)[0];
 			else round = '';
 		    }
 		}

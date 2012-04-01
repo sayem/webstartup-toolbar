@@ -3,7 +3,7 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" orient="vertical">
 	<script type="application/x-javascript" src="chrome://webstartup/content/webstartup.js" />
 	<toolbox id="navigator-toolbox">
-		<toolbar toolbarname="Webstartup Toolbar" class="webstartup-toolbar" context="toolbar-context-menu" hidden="false" persist="hidden">
+		<toolbar toolbarname="Web Startup Toolbar" id="webstartup-toolbar" class="webstartup-toolbar" context="toolbar-context-menu" hidden="false" persist="hidden">
 			<textbox tooltiptext="Webstartup Info" id="wsinfo" editable="true" clickSelectsAll="true" minwidth="100" width="175" hidden="true"/>
 			<toolbarbutton id="ws_pagerank" image="chrome://webstartup/skin/google.png" onclick="" label=": n/a" tooltiptext="Google Pagerank: n/a" class="ws-normaltb"/>
 			<toolbarbutton id="ws_alexa" image="chrome://webstartup/skin/alexa.ico" onclick="WebStartup.openLink('alexa')" label=": n/a" tooltiptext="Alexa Rank: n/a" class="ws-normaltb"/>
