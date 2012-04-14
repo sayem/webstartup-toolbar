@@ -309,11 +309,11 @@ window.WebStartup = {
                 var rt = WebStartup.alexaxmlhttp.responseText;
                 var offset = rt.indexOf('<POPULARITY');
                 var start = rt.indexOf('TEXT="', offset);
-                var end = rt.indexOf('/>', start + 5);
+                var end = rt.indexOf('"', start + 6);
                 var alexa;
                 if (start == -1 || end == -1) alexa = 'n/a';
                 else {
-                    if (WebStartup.isInt(rt.substr(start + 6, end - start - 7))) alexa = WebStartup.addCommas(rt.substr(start + 6, end - start - 7));
+                    if (WebStartup.isInt(rt.substr(start + 6, end - start - 6))) alexa = WebStartup.addCommas(rt.substr(start + 6, end - start - 6));
                     else alexa = 'n/a';
                 }
                 WebStartup.$("ws_alexa").label = ': ' + alexa;
