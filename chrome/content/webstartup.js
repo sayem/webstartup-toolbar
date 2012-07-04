@@ -133,12 +133,6 @@ window.WebStartup = {
                     if (WebStartup.qcxmlhttp) WebStartup.qcxmlhttp.abort();
                     WebStartup.quantcastRank();
                 }
-                if (WebStartup.wsdata[WebStartup.currUrl]["yahoobl"] == ': n/a' && !WebStartup.$('ws_yahoobl').hidden) {
-                    WebStartup.$("ws_yahoobl").label = ': n/a';
-                    WebStartup.$("ws_yahoobl").tooltipText = 'Yahoo Backlinks: n/a';
-                    if (WebStartup.yahooxmlhttp) WebStartup.yahooxmlhttp.abort();
-                    WebStartup.yahooBL();
-                }
                 if (WebStartup.wsdata[WebStartup.currUrl]["googlebl"] == ': n/a' && !WebStartup.$('ws_googlebl').hidden) {
                     WebStartup.$("ws_googlebl").label = ': n/a';
                     WebStartup.$("ws_googlebl").tooltipText = 'Google Backlinks: n/a';
@@ -176,7 +170,6 @@ window.WebStartup = {
             if (!WebStartup.$('ws_alexa').hidden) WebStartup.alexaRank();
             if (!WebStartup.$('ws_compete').hidden) WebStartup.competeRank();
             if (!WebStartup.$('ws_quantcast').hidden) WebStartup.quantcastRank();
-            if (!WebStartup.$('ws_yahoobl').hidden) WebStartup.yahooBL();
             if (!WebStartup.$('ws_googlebl').hidden) WebStartup.googleBL();
             if (!WebStartup.$('ws_bingbl').hidden) WebStartup.bingBL();
             if (!WebStartup.$('ws_linkedin').hidden) WebStartup.linkedinEmp();  
@@ -192,7 +185,6 @@ window.WebStartup = {
         WebStartup.wsdata[WebStartup.currUrl]["compete"] = ': n/a';
         WebStartup.wsdata[WebStartup.currUrl]["quantcast"] = ': n/a';
         WebStartup.wsdata[WebStartup.currUrl]["googlebl"] = ': n/a';
-        WebStartup.wsdata[WebStartup.currUrl]["yahoobl"] = ': n/a';
         WebStartup.wsdata[WebStartup.currUrl]["bingbl"] = ': n/a';
         WebStartup.wsdata[WebStartup.currUrl]["linkedin"] = ': n/a';
         WebStartup.wsdata[WebStartup.currUrl]["crunchbase"] = ': n/a';
@@ -225,13 +217,6 @@ window.WebStartup = {
             WebStartup.qcxmlhttp.abort();
             delete(WebStartup.qcxmlhttp);
             WebStartup.wsdata[WebStartup.currUrl]["quantcast"] = ': n/a';
-        }
-        WebStartup.$("ws_yahoobl").label = ': n/a';
-        WebStartup.$("ws_yahoobl").tooltipText = 'Yahoo Backlinks: n/a';
-        if (WebStartup.yahooxmlhttp && WebStartup.yahooxmlhttp.readyState != 4) {
-            WebStartup.yahooxmlhttp.abort();
-            delete(WebStartup.yahooxmlhttp);
-            WebStartup.wsdata[WebStartup.currUrl]["yahoobl"] = ': n/a';
         }
         WebStartup.$("ws_googlebl").label = ': n/a';
         WebStartup.$("ws_googlebl").tooltipText = 'Google Backlinks: n/a';
@@ -275,8 +260,6 @@ window.WebStartup = {
         WebStartup.$("ws_googlebl").tooltipText = 'Google Backlinks: ' + WebStartup.wsdata[WebStartup.currUrl]["googlebl"];
         WebStartup.$("ws_bingbl").label = ': ' + WebStartup.wsdata[WebStartup.currUrl]["bingbl"];
         WebStartup.$("ws_bingbl").tooltipText = 'Bing Backlinks: ' + WebStartup.wsdata[WebStartup.currUrl]["bingbl"];
-        WebStartup.$("ws_yahoobl").label = ': ' + WebStartup.wsdata[WebStartup.currUrl]["yahoobl"];
-        WebStartup.$("ws_yahoobl").tooltipText = 'Yahoo Backlinks: ' + WebStartup.wsdata[WebStartup.currUrl]["yahoobl"];
         WebStartup.$("ws_linkedin").label = ': ' + WebStartup.wsdata[WebStartup.currUrl]["linkedin"];
         WebStartup.$("ws_linkedin").tooltipText = 'LinkedIn: ' + WebStartup.wsdata[WebStartup.currUrl]["linkedin"];
         WebStartup.$("ws_crunchbase").label = ': ' + WebStartup.wsdata[WebStartup.currUrl]["crunchbase"];
@@ -427,17 +410,26 @@ window.WebStartup = {
     bingBL: function () {
         WebStartup.workingURL = 'http://www.bing.com/search?q=inbody:' + encodeURIComponent(WebStartup.currUrl) + '+-site:' + encodeURIComponent(WebStartup.currUrl);
         WebStartup.bingblxmlhttp = WebStartup.getXmlHttpObject();
+        if (WebStartup.bingblxmlhttp == null) {
+            alert("Your browser does not support XML HTTP Request. Please uninstall this addon.");
+            return;
+        }
         WebStartup.bingblxmlhttp.onreadystatechange = function () {
             if (WebStartup.bingblxmlhttp.readyState == 4 && WebStartup.bingblxmlhttp.status == 200) {
                 var rt = WebStartup.bingblxmlhttp.responseText;
-                var end = rt.indexOf(' results</span>');
-                var start = rt.lastIndexOf('of ', end);
-                var bingbl = '';
-                if (start == -1 || end == -1) bingbl = '0';
-                else {
-                    if (WebStartup.isInt(rt.substr(start + 3, end - start - 3))) bingbl = rt.substr(start + 3, end - start - 3);
-                    else bingbl = 'n/a';
-                }
+                var bingbl='';
+				var regexpResult1=rt.match(/<span class="sb_count" id="count">(.*) result(|s)<\/span>/i);
+				var regexpResult2=rt.match(/<span class="sb_count" id="count">(.*) of (.*) result(|s)<\/span>/i);
+				if(regexpResult1==null && regexpResult2==null)
+					bingbl='0';
+				        else{
+					          if(regexpResult2)
+						            bingbl = regexpResult2[2];
+					          else
+						            bingbl = regexpResult1[1];
+					          if(!WebStartup.isInt(bingbl))
+						            bingbl='0';
+				        }
                 WebStartup.$("ws_bingbl").label = ': ' + bingbl;
                 WebStartup.$("ws_bingbl").tooltipText = 'Bing Backlinks: ' + bingbl;
                 WebStartup.wsdata[encodeURIComponent(WebStartup.currUrl)]["bingbl"] = bingbl;
@@ -446,29 +438,6 @@ window.WebStartup = {
         };
         WebStartup.bingblxmlhttp.open("GET", WebStartup.workingURL, true);
         WebStartup.bingblxmlhttp.send(null);
-    },
-    yahooBL: function () {
-        WebStartup.workingURL = 'http://siteexplorer.search.yahoo.com/siteexplorer/search?p=' + encodeURIComponent(WebStartup.currUrl) + '&bwm=i&bwmo=d&bwmf=u';
-        WebStartup.yahooxmlhttp = WebStartup.getXmlHttpObject();
-        WebStartup.yahooxmlhttp.onreadystatechange = function () {
-            if (WebStartup.yahooxmlhttp.readyState == 4 && WebStartup.yahooxmlhttp.status == 200) {
-                var rt = WebStartup.yahooxmlhttp.responseText;
-                var start = rt.indexOf('Inlinks (');
-                var end = rt.indexOf(')', start);
-                var yahooind = '';
-                if (start == -1 || end == -1) yahooind = '0';
-                else {
-                    if (WebStartup.isInt(rt.substr(start + 9, end - start - 9))) yahooind = rt.substr(start + 9, end - start - 9);
-                    else yahooind = 'n/a';
-                }
-                WebStartup.$("ws_yahoobl").label = ': ' + yahooind;
-                WebStartup.$("ws_yahoobl").tooltipText = 'Yahoo Backlinks: ' + yahooind;
-                WebStartup.wsdata[encodeURIComponent(WebStartup.currUrl)]["yahoobl"] = yahooind;
-                WebStartup.$("wsinfo").value = WebStartup.$("wsinfo").value + 'g';
-            }
-        };
-        WebStartup.yahooxmlhttp.open("GET", WebStartup.workingURL, true);
-        WebStartup.yahooxmlhttp.send(null);
     },
     linkedinEmp: function () {	
 	var tld = WebStartup.currUrl.split('.')[1];
@@ -495,7 +464,7 @@ window.WebStartup = {
                 WebStartup.$("ws_linkedin").label = ': ' + linkedin;
                 WebStartup.$("ws_linkedin").tooltipText = 'LinkedIn: ' + linkedin;
                 WebStartup.wsdata[encodeURIComponent(WebStartup.currUrl)]["linkedin"] = linkedin;
-                WebStartup.$("wsinfo").value = WebStartup.$("wsinfo").value + 'h';
+                WebStartup.$("wsinfo").value = WebStartup.$("wsinfo").value + 'g';
             }
 	};
         WebStartup.linkedinxmlhttp.open("GET", WebStartup.workingURL, true);
@@ -598,7 +567,7 @@ window.WebStartup = {
                 WebStartup.$("ws_crunchbase").label = ': ' + crunchbase;
                 WebStartup.$("ws_crunchbase").tooltipText = 'CrunchBase: ' + crunchbase;
                 WebStartup.wsdata[encodeURIComponent(WebStartup.currUrl)]["crunchbase"] = crunchbase;
-                WebStartup.$("wsinfo").value = WebStartup.$("wsinfo").value + 'i';
+                WebStartup.$("wsinfo").value = WebStartup.$("wsinfo").value + 'h';
             }
         };
         WebStartup.crunchbasexmlhttp.open("GET", WebStartup.workingURL, true);
@@ -614,15 +583,14 @@ window.WebStartup = {
             else if (url_path == 'quantcast') getBrowser().selectedTab = getBrowser().addTab('http://www.quantcast.com/' + WebStartup.lastURL);
             else if (url_path == 'googlebl') getBrowser().selectedTab = getBrowser().addTab('http://www.google.com/search?hl=en&filter=0&lr=&ie=UTF-8&q=link:' + WebStartup.lastURL + '&filter=0');
             else if (url_path == 'bingbl') getBrowser().selectedTab = getBrowser().addTab('http://www.bing.com/search?q=inbody:' + WebStartup.lastURL + '+-site:' + WebStartup.lastURL);
-            else if (url_path == 'yahoobl') getBrowser().selectedTab = getBrowser().addTab('http://siteexplorer.search.yahoo.com/siteexplorer/search?bwm=i&bwmo=d&bwmf=u&p=' + WebStartup.lastURL);
-	    else if (url_path == 'linkedin') {
-		if (WebStartup.lastURL.split('.')[1] in {'com':'', 'net':'', 'org':'', 'gov':'', 'edu':''}) getBrowser().selectedTab = getBrowser().addTab('http://www.linkedin.com/company/' + WebStartup.lastURL.split('.')[0]);
-		else getBrowser().selectedTab = getBrowser().addTab('http://www.linkedin.com/company/' + WebStartup.lastURL);
-	    }
-	    else if (url_path == 'crunchbase') {
-		if (WebStartup.lastURL.split('.')[1] in {'com':'', 'net':'', 'org':'', 'gov':'', 'edu':''}) getBrowser().selectedTab = getBrowser().addTab('http://www.crunchbase.com/company/' + WebStartup.lastURL.split('.')[0]);
-	        else getBrowser().selectedTab = getBrowser().addTab('http://www.crunchbase.com/company/' + WebStartup.lastURL.split('.')[0] + '-' + WebStartup.lastURL.split('.')[1]);
-	    }
+      	    else if (url_path == 'linkedin') {
+		            if (WebStartup.lastURL.split('.')[1] in {'com':'', 'net':'', 'org':'', 'gov':'', 'edu':''}) getBrowser().selectedTab = getBrowser().addTab('http://www.linkedin.com/company/' + WebStartup.lastURL.split('.')[0]);
+		            else getBrowser().selectedTab = getBrowser().addTab('http://www.linkedin.com/company/' + WebStartup.lastURL);
+	          }
+	          else if (url_path == 'crunchbase') {
+		            if (WebStartup.lastURL.split('.')[1] in {'com':'', 'net':'', 'org':'', 'gov':'', 'edu':''}) getBrowser().selectedTab = getBrowser().addTab('http://www.crunchbase.com/company/' + WebStartup.lastURL.split('.')[0]);
+	              else getBrowser().selectedTab = getBrowser().addTab('http://www.crunchbase.com/company/' + WebStartup.lastURL.split('.')[0] + '-' + WebStartup.lastURL.split('.')[1]);
+	          }
             else getBrowser().selectedTab = getBrowser().addTab('');
         }
     },
@@ -647,8 +615,7 @@ window.WebStartup = {
         }
         WebStartup.$('ws_googlebl').hidden = !(prefs.getBoolPref("googlebl"));
         WebStartup.$('ws_bingbl').hidden = !(prefs.getBoolPref("bingbl"));
-        WebStartup.$('ws_yahoobl').hidden = !(prefs.getBoolPref("yahoobl"));
-        if (WebStartup.$('ws_googlebl').hidden && WebStartup.$('ws_bingbl').hidden && WebStartup.$('ws_yahoobl').hidden) {
+        if (WebStartup.$('ws_googlebl').hidden && WebStartup.$('ws_bingbl').hidden) {
             WebStartup.$('ws_sep_backlinks').hidden = true;
         } else {
             WebStartup.$('ws_sep_backlinks').hidden = false;

@@ -13,7 +13,6 @@
 			<toolbarseparator id="ws_sep_uniqs"/>
 			<toolbarbutton id="ws_googlebl" image="chrome://webstartup/skin/google.png" onclick="WebStartup.openLink('googlebl')" label=": n/a" tooltiptext="Google Backlinks: n/a" class="ws-normaltb"/>
 			<toolbarbutton id="ws_bingbl" image="chrome://webstartup/skin/bing.ico" onclick="WebStartup.openLink('bingbl')" label=": n/a" tooltiptext="Bing Backlinks: n/a" class="ws-normaltb"/>
-			<toolbarbutton id="ws_yahoobl" image="chrome://webstartup/skin/yahoos.png" onclick="WebStartup.openLink('yahoobl')" label=": n/a" tooltiptext="Yahoo Backlinks: n/a" class="ws-normaltb"/>
 			<toolbarseparator id="ws_sep_backlinks"/>
 			<toolbarbutton id="ws_linkedin" image="chrome://webstartup/skin/linkedin.png" onclick="WebStartup.openLink('linkedin')" label=": n/a" tooltiptext="LinkedIn: n/a" class="ws-normaltb"/>
 			<toolbarseparator id="ws_sep_linkedin"/>
