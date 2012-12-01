@@ -21,7 +21,7 @@ LICENSE
 
 Copyright © 2011:
 
-[Sayem Islam](http://sayemislam.com)
+[Sayem Khan](http://sayemkhan.com)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
